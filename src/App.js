@@ -33,6 +33,7 @@ function App() {
 
   let route = useRoutes(routes, {
     routeProps: { vehicles: vehicles, starships: starships, species: species },
+    basePath: "StarWarsAPI",
   });
   useEffect(() => {
     async function getAllAPIS(typ, setFunction) {
@@ -49,7 +50,7 @@ function App() {
       setFunction(new Map(result.map((item) => [item.url, item])));
     }
     // Get All the resoucres from paginated backend
-    getAllAPIS("vehicles",setVehicles);
+    getAllAPIS("vehicles", setVehicles);
     getAllAPIS("starships", setStarships);
     getAllAPIS("species", setSpecies);
   }, []);
@@ -77,7 +78,7 @@ function App() {
             display: "block",
           },
         }}
-        src="/gradient-left-dark.svg"
+        src="/StarWarsAPI/gradient-left-dark.svg"
       />
       <StyledImg
         alt="gradient violet background"
@@ -100,7 +101,7 @@ function App() {
             display: "block",
           },
         }}
-        src="/gradient-right-dark.svg"
+        src="/StarWarsAPI/gradient-right-dark.svg"
       />
     </NextUIProvider>
   );
