@@ -24,7 +24,8 @@ jobs:
     
     - name: Install NPM packages
       run: npm ci
-    
+    - name: Unset CI
+      run: unset CI
     - name: Build project
       run: npm run build
     
