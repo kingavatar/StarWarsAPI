@@ -29,7 +29,7 @@ export default function CharacterDetails(props) {
           light
           auto
           onPress={() => {
-            navigate("/");
+            navigate("/StarWarsAPI/");
           }}
         >
           <IconArrowLeft size={36} />

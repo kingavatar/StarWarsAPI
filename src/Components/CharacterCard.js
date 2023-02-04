@@ -21,12 +21,20 @@ function CharacterCard(props) {
   genders.set("hermaphrodite", <IconGenderHermaphrodite />);
   
   return (
-    <Card isHoverable isPressable css={{ p: "$sm", h:"260px", w:"220px" }} onPress={()=> {
-      const getCharId = props.character.url.substring(
-        props.character.url.lastIndexOf("/") - 1
-      );
-      navigate(`/character/${getCharId}`, {state: {character:props.character}});}}>
-      <Card.Header css={{justifyContent:"center"}}>
+    <Card
+      isHoverable
+      isPressable
+      css={{ p: "$sm", h: "260px", w: "220px" }}
+      onPress={() => {
+        const getCharId = props.character.url.substring(
+          props.character.url.lastIndexOf("/") - 1
+        );
+        navigate(`/StarWarsAPI/character/${getCharId}`, {
+          state: { character: props.character },
+        });
+      }}
+    >
+      <Card.Header css={{ justifyContent: "center" }}>
         <Text h4 css={{ mb: 0 }}>
           {props.character.name}
         </Text>

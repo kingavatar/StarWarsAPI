@@ -39,8 +39,8 @@ export default function CharacterTable(props){
       onSelectionChange={(keys) => {
         const [url] = keys;
         const getCharId = url.substring(url.lastIndexOf("/") - 1);
-        navigate(`/character/${getCharId}`, {
-          state: { character: list.items.find(x=>x.url === url) },
+        navigate(`/StarWarsAPI/character/${getCharId}`, {
+          state: { character: list.items.find((x) => x.url === url) },
         });
       }}
     >
