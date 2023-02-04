@@ -38,12 +38,13 @@ export default function SpeciesFilter(props) {
     [selectedSpecies]
   );
 
+  const handleSpecies = props.setSpecies;
   useMemo(() => {
-    const species = data?.pages.flatMap(x=>x.results).find((item)=>
-            item.name=== selectedSpeciesValue
-    )
-    props.setSpecies(species);
-  }, [data?.pages, selectedSpeciesValue]);
+    const species = data?.pages
+      .flatMap((x) => x.results)
+      .find((item) => item.name === selectedSpeciesValue);
+    handleSpecies(species);
+  }, [data?.pages, selectedSpeciesValue, handleSpecies]);
 
   return (
     <Dropdown isOpen={isOpen} onOpenChange={setIsOpen}>

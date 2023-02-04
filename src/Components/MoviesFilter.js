@@ -13,12 +13,13 @@ export default function MoviesFilter(props) {
     [selectedMovie]
   );
 
+  const handleMovie = props.setMovie;
   useMemo(() => {
     const movie = moviesQuery.data?.results.find(
       (item) => item.title === selectedMovieValue
     );
-    props.setMovie(movie);
-  }, [moviesQuery.data, selectedMovieValue]);
+    handleMovie(movie);
+  }, [moviesQuery.data, selectedMovieValue, handleMovie]);
 
   return (
     <Dropdown>
