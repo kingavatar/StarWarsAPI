@@ -33,7 +33,7 @@ function App() {
 
   let route = useRoutes(routes, {
     routeProps: { vehicles: vehicles, starships: starships, species: species },
-    basePath: "StarWarsAPI",
+    basePath: "/StarWarsAPI",
   });
   useEffect(() => {
     async function getAllAPIS(typ, setFunction) {
