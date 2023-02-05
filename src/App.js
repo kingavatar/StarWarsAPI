@@ -7,9 +7,10 @@ import { darkTheme, lightTheme } from './theme/shared';
 import { appears, StyledImg } from './layout/styles';
 import Content from './layout/Content';
 import { useRoutes } from "raviger";
-import CharacterDetails from './layout/CharacterDetails';
-import { useEffect, useState } from 'react';
-import { fetchSwapi } from './APIs/fetchSwapi';
+import CharacterDetails from "./layout/CharacterDetails";
+import { useEffect, useState } from "react";
+import { fetchSwapi } from "./APIs/fetchSwapi";
+import NotFound from "./layout/NotFound";
 
 const routes = {
   "/": ({ vehicles, starships, species }) => <Content />,
@@ -21,18 +22,24 @@ const routes = {
       species={species}
     />
   ),
+  "/*": ({ darkMode }) => <NotFound darkMode={darkMode} />,
 };
 
-
-
 function App() {
-
   const [vehicles, setVehicles] = useState(new Map());
   const [starships, setStarships] = useState(new Map());
   const [species, setSpecies] = useState(new Map());
 
+  // Apply light or dark theme depending on useDarkMode value
+  const darkMode = useDarkMode(false);
+
   let route = useRoutes(routes, {
-    routeProps: { vehicles: vehicles, starships: starships, species: species },
+    routeProps: {
+      vehicles: vehicles,
+      starships: starships,
+      species: species,
+      darkMode: darkMode,
+    },
     basePath: "/StarWarsAPI",
   });
   useEffect(() => {
@@ -54,9 +61,6 @@ function App() {
     getAllAPIS("starships", setStarships);
     getAllAPIS("species", setSpecies);
   }, []);
-
-  // Apply light or dark theme depending on useDarkMode value
-  const darkMode = useDarkMode(false);
 
   return (
     <NextUIProvider theme={darkMode.value ? darkTheme : lightTheme}>

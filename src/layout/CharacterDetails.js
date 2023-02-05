@@ -1,5 +1,13 @@
-import { Button, Container, Row, Table, Text } from "@nextui-org/react";
-import { IconArrowLeft } from "@tabler/icons-react";
+import {
+  Button,
+  Container,
+  Grid,
+  Loading,
+  Row,
+  Table,
+  Text,
+} from "@nextui-org/react";
+import { IconArrowLeft, IconHome, IconReload } from "@tabler/icons-react";
 import { navigate, useHistory } from "raviger";
 import { useQuery } from "react-query";
 import { fetchSingleSwapi, fetchSwapi } from "../APIs/fetchSwapi";
@@ -11,17 +19,82 @@ export default function CharacterDetails(props) {
     () => fetchSingleSwapi("people", props.charId),
     {
       initialData: () => {
-        if (state.state.character) return state.state.character;
+        if (state.state?.character) return state.state?.character;
       },
+      retry: false,
     }
   );
   const moviesQuery = useQuery(["films", "films"], () => fetchSwapi("films"));
+
+  if (!Number.isInteger(parseFloat(props.charId))) {
+    navigate("/StarWarsAPI/404");
+  }
+
   if (characterQuery.isLoading) {
-    return <></>;
+    // Early Return which displays Loading Screen when Characters Details are fetched
+    return (
+      <Grid.Container
+        css={{ h: "80vh" }}
+        justify="center"
+        alignItems="center"
+        direction="column"
+      >
+        <Grid>
+          <Loading
+            size="xl"
+            color="secondary"
+            type="gradient"
+            textColor="secondary"
+          >
+            Loading the Characters
+          </Loading>
+        </Grid>
+      </Grid.Container>
+    );
   }
+
+  // Early Return which displays Error Screen when Characters Details are fetched
+
   if (characterQuery.isError) {
-    return <></>;
+    return (
+      <Grid.Container
+        css={{ h: "85vh" }}
+        justify="center"
+        alignItems="center"
+        direction="column"
+      >
+        <Text h2 color="error">
+          An Error Occured. Try Refresh or Try again later.
+        </Text>
+        <Text h4 color="warning">
+          {characterQuery.error && characterQuery.error.status === 404
+            ? "404 Not Found"
+            : characterQuery.error.message}
+        </Text>
+        <Button
+          iconRight={
+            characterQuery.error && characterQuery.error.status === 404 ? (
+              <IconHome />
+            ) : (
+              <IconReload />
+            )
+          }
+          shadow
+          auto
+          onClick={() => {
+            if (characterQuery.error && characterQuery.error.status === 404)
+              navigate("/StarWarsAPI/");
+            else window.location.reload();
+          }}
+        >
+          {characterQuery.error && characterQuery.error.status === 404
+            ? "Go Back Home"
+            : "Refresh"}
+        </Button>
+      </Grid.Container>
+    );
   }
+
   return (
     <Container css={{ position: "relative", zIndex: "$2", mt: "76px" }}>
       <Row align="center">
@@ -51,6 +124,7 @@ export default function CharacterDetails(props) {
             <Table.Cell>Species</Table.Cell>
             <Table.Cell>
               {props.species &&
+                characterQuery.data.species &&
                 characterQuery.data.species.map((spec, index) => {
                   const title = props.species.get(spec)?.name;
                   return (
@@ -67,6 +141,7 @@ export default function CharacterDetails(props) {
             <Table.Cell>
               <Text>
                 {moviesQuery.status === "success" &&
+                  characterQuery.data.films &&
                   characterQuery.data.films.map((film, index) => {
                     const title = moviesQuery.data?.results.find(
                       (x) => x.url === film
@@ -86,6 +161,7 @@ export default function CharacterDetails(props) {
             <Table.Cell>
               <Text>
                 {props.starships &&
+                  characterQuery.data.starships &&
                   characterQuery.data.starships.map((starship, index) => {
                     const title = props.starships.get(starship)?.name;
                     return (
@@ -103,6 +179,7 @@ export default function CharacterDetails(props) {
             <Table.Cell>
               <Text>
                 {props.vehicles &&
+                  characterQuery.data.vehicles &&
                   characterQuery.data.vehicles.map((vehicle, index) => {
                     const title = props.vehicles.get(vehicle)?.name;
                     return (
