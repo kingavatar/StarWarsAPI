@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/StarWarsAPI/static/js/main.bf5c38a7.js",
+    "main.js": "/StarWarsAPI/static/js/main.bb0e43eb.js",
     "index.html": "/StarWarsAPI/index.html",
-    "main.bf5c38a7.js.map": "/StarWarsAPI/static/js/main.bf5c38a7.js.map"
+    "main.bb0e43eb.js.map": "/StarWarsAPI/static/js/main.bb0e43eb.js.map"
   },
   "entrypoints": [
-    "static/js/main.bf5c38a7.js"
+    "static/js/main.bb0e43eb.js"
   ]
 }
