@@ -26,9 +26,10 @@ function CharacterCard(props) {
       isPressable
       css={{ p: "$sm", h: "260px", w: "220px" }}
       onPress={() => {
-        const getCharId = props.character.url.substring(
-          props.character.url.lastIndexOf("/") - 1
-        );
+        const getCharId =
+          props.character.url.slice(-1) === "/"
+            ? props.character.url.split("/").at(-2)
+            : props.character.url.split("/").at(-1);
         navigate(`/StarWarsAPI/character/${getCharId}`, {
           state: { character: props.character },
         });

@@ -228,8 +228,11 @@ function Content() {
               width="120px"
               labelLeft="Start Date"
               value={startDate}
-              onChange={(evt) => setStartDate(Number(evt.target.value))}
+              onChange={(evt) =>
+                setStartDate(Math.abs(Number(evt.target.value)))
+              }
               type="number"
+              min="0"
               css={{ mr: "$6" }}
             />
             <Radio.Group
@@ -252,7 +255,8 @@ function Content() {
               labelLeft="End Date"
               type="number"
               value={endDate}
-              onChange={(evt) => setEndDate(Number(evt.target.value))}
+              min="0"
+              onChange={(evt) => setEndDate(Math.abs(Number(evt.target.value)))}
               css={{ mr: "$6" }}
             />
             <Radio.Group

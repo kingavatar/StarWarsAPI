@@ -2,7 +2,7 @@ import { Table, useAsyncList, useCollator } from "@nextui-org/react";
 import { navigate } from "raviger";
 import { useEffect } from "react";
 
-export default function CharacterTable(props){
+export default function CharacterTable(props) {
   const collator = useCollator({ numeric: true });
   async function sort({ items, sortDescriptor }) {
     return {
@@ -26,7 +26,7 @@ export default function CharacterTable(props){
   const list = useAsyncList({ load, sort });
   useEffect(() => {
     list.reload();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data]);
 
   return (
@@ -38,7 +38,8 @@ export default function CharacterTable(props){
       selectionMode="single"
       onSelectionChange={(keys) => {
         const [url] = keys;
-        const getCharId = url.substring(url.lastIndexOf("/") - 1);
+        const getCharId =
+          url.slice(-1) === "/" ? url.split("/").at(-2) : url.split("/").at(-1);
         navigate(`/StarWarsAPI/character/${getCharId}`, {
           state: { character: list.items.find((x) => x.url === url) },
         });
