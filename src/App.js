@@ -6,7 +6,7 @@ import Header from './layout/Header';
 import { darkTheme, lightTheme } from './theme/shared';
 import { appears, StyledImg } from './layout/styles';
 import Content from './layout/Content';
-import { useRoutes } from "raviger";
+import { Redirect, useRoutes } from "raviger";
 import CharacterDetails from "./layout/CharacterDetails";
 import { useEffect, useState } from "react";
 import { fetchSwapi } from "./APIs/fetchSwapi";
@@ -22,7 +22,8 @@ const routes = {
       species={species}
     />
   ),
-  "/*": ({ darkMode }) => <NotFound darkMode={darkMode} />,
+  "/404": ({ darkMode }) => <NotFound darkMode={darkMode} />,
+  "/*": () => <Redirect to="/StarWarsAPI/404" />,
 };
 
 function App() {
